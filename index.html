@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scholaria · 멘토링 플랫폼</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   Scholaria — Premium Academic Journal Theme
+   =========================================================== */
+:root {
+  --paper:#F5F0E6; --paper-2:#FAF7F0; --paper-3:#EDE6D6;
+  --ink:#1C1917; --ink-2:#3F3A33; --muted:#78716C;
+  --line:#D6CFC0; --line-2:#BFB5A0;
+  --burgundy:#8B2635; --burgundy-d:#6B1D2A;
+  --gold:#B8923D; --red:#C0392B; --green:#27AE60;
+  --shadow-sm:0 1px 2px rgba(28,25,23,.05);
+  --shadow-md:0 4px 14px rgba(28,25,23,.08);
+  --shadow-lg:0 12px 40px rgba(28,25,23,.12);
+  --r-sm:6px; --r-md:10px; --r-lg:18px;
+  --serif:'Gowun Batang','Fraunces',Georgia,serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:var(--sans); font-size:15px; line-height:1.55;
+  color:var(--ink); background:var(--paper);
+  background-image:
+    radial-gradient(ellipse 1200px 600px at 20% 0%, rgba(184,146,61,.06), transparent 60%),
+    radial-gradient(ellipse 1000px 500px at 100% 100%, rgba(139,38,53,.04), transparent 60%);
+  min-height:100vh; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+button{font-family:inherit;cursor:pointer}
+input,textarea,select{font-family:inherit;font-size:inherit}
+a{color:inherit}
+body::before{
+  content:''; position:fixed; inset:0; pointer-events:none; opacity:.035; z-index:0;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- AUTH ---------- */
+.auth-wrap{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr;position:relative;z-index:1}
+.auth-hero{
+  padding:64px 72px;
+  background:linear-gradient(180deg,rgba(28,25,23,0) 0%,rgba(28,25,23,.04) 100%),var(--paper-2);
+  border-right:1px solid var(--line); position:relative; overflow:hidden;
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+.auth-hero::after{
+  content:''; position:absolute; right:-180px; bottom:-180px; width:520px; height:520px;
+  border-radius:50%; background:radial-gradient(circle,rgba(139,38,53,.10),transparent 65%); pointer-events:none;
+}
+.brand{display:flex;align-items:baseline;gap:12px}
+.brand-mark{font-family:var(--serif);font-style:italic;font-weight:500;font-size:28px;color:var(--burgundy);letter-spacing:-.01em}
+.hero-main{margin:40px 0 0}
+.hero-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+.hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5vw,58px);line-height:1.12;letter-spacing:-.02em;margin:0 0 22px}
+.hero-title em{font-style:italic;color:var(--burgundy);font-family:'Fraunces',serif;font-weight:400}
+.hero-sub{font-size:16px;line-height:1.7;color:var(--ink-2);max-width:460px}
+.hero-meta{display:flex;gap:28px;padding-top:24px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.hero-meta div span{color:var(--ink);margin-left:6px}
+.auth-panel{padding:72px 56px;display:flex;align-items:center;justify-content:center}
+.auth-card{width:100%;max-width:380px}
+.auth-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:32px}
+.auth-tab{background:none;border:none;padding:12px 0;margin-right:28px;font-family:var(--serif);font-size:18px;color:var(--muted);position:relative;transition:color .2s}
+.auth-tab.active{color:var(--ink)}
+.auth-tab.active::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--burgundy)}
+
+.field{margin-bottom:18px}
+.field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field label .hint{text-transform:none;letter-spacing:0;color:var(--muted)}
+.field input{width:100%;padding:12px 14px;background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-sm);color:var(--ink);transition:border-color .15s,background .15s}
+.field input:focus{outline:none;border-color:var(--ink);background:#fff}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--paper-2);border-radius:var(--r-sm);font-size:14px;font-weight:500;letter-spacing:-.005em;transition:transform .12s,background .15s,color .15s;width:100%}
+.btn:hover{background:var(--burgundy);border-color:var(--burgundy)}
+.btn:active{transform:scale(.98)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2)}
+.btn-ghost:hover{background:var(--paper-3);color:var(--ink);border-color:var(--ink)}
+.btn-small{padding:8px 14px;font-size:13px;width:auto}
+.btn-danger{background:transparent;color:var(--red);border:1px solid var(--line-2)}
+.btn-danger:hover{background:var(--red);color:#fff;border-color:var(--red)}
+
+.auth-note{font-size:12px;color:var(--muted);margin-top:14px;text-align:center;line-height:1.6}
+.error-msg{margin-top:12px;padding:10px 12px;background:rgba(192,57,43,.08);border-left:3px solid var(--red);color:var(--red);font-size:13px;border-radius:4px;display:none}
+.error-msg.show{display:block}
+.success-msg{margin-top:12px;padding:10px 12px;background:rgba(39,174,96,.10);border-left:3px solid var(--green);color:var(--green);font-size:13px;border-radius:4px;display:none}
+.success-msg.show{display:block}
+
+@media(max-width:900px){
+  .auth-wrap{grid-template-columns:1fr}
+  .auth-hero{padding:40px 28px;border-right:none;border-bottom:1px solid var(--line)}
+  .auth-panel{padding:40px 28px}
+}
+
+/* ---------- SHELL ---------- */
+.app-shell{min-height:100vh;display:grid;grid-template-columns:240px 1fr;position:relative;z-index:1}
+.sidebar{background:var(--paper-2);border-right:1px solid var(--line);padding:28px 20px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.side-brand{font-family:var(--serif);font-size:22px;letter-spacing:-.01em;color:var(--ink);padding:0 10px 22px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:8px}
+.side-brand em{font-family:'Fraunces',serif;font-style:italic;color:var(--burgundy);font-size:24px}
+.side-nav{margin-top:24px;display:flex;flex-direction:column;gap:3px}
+.nav-heading{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:12px 10px 6px}
+.nav-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);color:var(--ink-2);text-decoration:none;font-size:14px;transition:background .15s,color .15s;cursor:pointer;background:none;border:none;text-align:left;font-family:inherit;width:100%}
+.nav-link:hover{background:var(--paper-3);color:var(--ink)}
+.nav-link.active{background:var(--ink);color:var(--paper-2)}
+.nav-link.active .nav-dot{background:var(--gold)}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+.side-footer{margin-top:auto;padding-top:18px;border-top:1px solid var(--line)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:10px;background:var(--paper-3);border-radius:var(--r-sm)}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:var(--ink);color:var(--paper-2);display:grid;place-items:center;font-family:var(--serif);font-size:16px}
+.user-avatar.mentor{background:var(--burgundy)}
+.user-name{font-size:13px;font-weight:600;color:var(--ink)}
+.user-role{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+.logout-btn{margin-top:10px;width:100%;padding:8px;font-size:12px;background:transparent;border:1px solid var(--line-2);border-radius:var(--r-sm);color:var(--muted);transition:all .15s}
+.logout-btn:hover{color:var(--burgundy);border-color:var(--burgundy)}
+
+.main{padding:40px 48px 80px;max-width:1280px}
+.page-head{margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--line);display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.page-eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.page-title{font-family:var(--serif);font-size:42px;font-weight:400;line-height:1.1;letter-spacing:-.02em;margin:0;color:var(--ink)}
+.page-title em{font-family:'Fraunces',serif;font-style:italic;color:var(--burgundy);font-weight:400}
+
+/* ---------- HOME ---------- */
+.dday-hero{background:var(--ink);color:var(--paper-2);border-radius:var(--r-lg);padding:44px 48px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px;margin-bottom:36px;overflow:hidden;position:relative}
+.dday-hero::before{content:'';position:absolute;right:-40px;top:-40px;width:360px;height:360px;background:radial-gradient(circle,rgba(184,146,61,.25),transparent 65%);pointer-events:none}
+.dday-label{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.dday-title{font-family:var(--serif);font-size:28px;font-weight:400;margin:0 0 4px}
+.dday-title em{font-family:'Fraunces',serif;font-style:italic;color:var(--gold);font-weight:400}
+.dday-sub{color:rgba(245,240,230,.6);font-size:14px;margin:6px 0 0}
+.dday-count{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(72px,11vw,140px);line-height:1;letter-spacing:-.04em;color:var(--paper-2);position:relative;z-index:1}
+.dday-count sup{font-size:.25em;vertical-align:top;color:var(--gold);font-family:var(--mono);letter-spacing:.2em;margin-left:4px}
+
+.home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+.home-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);padding:24px;text-decoration:none;color:inherit;transition:all .2s;position:relative;overflow:hidden;cursor:pointer;display:block}
+.home-card:hover{transform:translateY(-2px);border-color:var(--ink);box-shadow:var(--shadow-md)}
+.home-card .card-num{font-family:'Fraunces',serif;font-style:italic;font-size:42px;color:var(--burgundy);line-height:1;margin-bottom:12px}
+.home-card h3{font-family:var(--serif);font-weight:400;font-size:20px;margin:0 0 6px}
+.home-card p{margin:0;color:var(--muted);font-size:13px}
+.home-card .card-arrow{position:absolute;right:20px;bottom:20px;font-size:18px;color:var(--muted);transition:transform .2s}
+.home-card:hover .card-arrow{transform:translateX(4px);color:var(--burgundy)}
+
+/* ---------- LISTS ---------- */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:24px}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.item-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);padding:22px;cursor:pointer;text-decoration:none;color:inherit;transition:all .15s;display:flex;flex-direction:column;gap:14px;position:relative}
+.item-card:hover{border-color:var(--ink);box-shadow:var(--shadow-md)}
+.item-tag{align-self:flex-start;font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--burgundy);padding:3px 8px;border:1px solid var(--burgundy);border-radius:2px}
+.item-title{font-family:var(--serif);font-size:20px;font-weight:400;margin:0;color:var(--ink);line-height:1.3}
+.item-meta{display:flex;gap:14px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+
+.empty-state{grid-column:1/-1;padding:80px 20px;text-align:center;color:var(--muted);border:1px dashed var(--line-2);border-radius:var(--r-md);background:var(--paper-2)}
+.empty-state .em-icon{font-family:'Fraunces',serif;font-style:italic;font-size:54px;color:var(--line-2);margin-bottom:10px}
+
+/* ---------- DETAIL ---------- */
+.detail-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:20px;font-family:var(--mono);letter-spacing:.05em;cursor:pointer;background:none;border:none;padding:0}
+.detail-back:hover{color:var(--burgundy)}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:24px}
+.section{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);padding:26px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.section-title{font-family:var(--serif);font-size:20px;font-weight:400;margin:0}
+.section-sub{font-size:12px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em}
+.subhead{font-size:12px;color:var(--muted);font-family:var(--mono);letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+
+.file-badge{display:flex;align-items:center;gap:12px;padding:14px;background:var(--paper-3);border-radius:var(--r-sm);border:1px solid var(--line)}
+.file-icon{width:40px;height:48px;background:var(--burgundy);color:#fff;font-family:var(--mono);font-weight:700;font-size:11px;display:grid;place-items:center;border-radius:3px;flex-shrink:0}
+.file-meta{flex:1;min-width:0}
+.file-name{font-size:14px;font-weight:500;color:var(--ink);word-break:break-all}
+.file-size{font-size:11px;color:var(--muted);font-family:var(--mono)}
+
+.upload-zone{border:1px dashed var(--line-2);border-radius:var(--r-sm);padding:20px;text-align:center;background:var(--paper-3);cursor:pointer;transition:all .15s;display:block}
+.upload-zone:hover{border-color:var(--ink);background:var(--paper-2)}
+.upload-zone.dragging{border-color:var(--burgundy);background:var(--paper-2)}
+.upload-zone input[type=file]{display:none}
+.upload-zone .uz-title{font-size:14px;margin-bottom:4px;color:var(--ink)}
+.upload-zone .uz-sub{font-size:11px;color:var(--muted);font-family:var(--mono)}
+.progress-bar{height:4px;background:var(--paper-3);border-radius:2px;overflow:hidden;margin-top:10px;display:none}
+.progress-bar.show{display:block}
+.progress-fill{height:100%;background:var(--burgundy);width:0%;transition:width .2s}
+
+.answers-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:14px}
+.answer-slot{display:flex;flex-direction:column;gap:4px;padding:10px;background:var(--paper-3);border:1px solid var(--line);border-radius:var(--r-sm);text-align:center}
+.answer-slot.locked{opacity:.35;filter:grayscale(1)}
+.answer-slot .slot-num{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+.answer-slot input{width:100%;padding:6px 4px;font-size:15px;font-weight:600;text-align:center;border:1px solid var(--line);background:#fff;border-radius:4px;color:var(--ink);font-family:var(--serif)}
+.answer-slot input:focus{outline:none;border-color:var(--ink)}
+.answer-slot.correct{background:rgba(39,174,96,.12);border-color:var(--green)}
+.answer-slot.correct .slot-num{color:var(--green)}
+.answer-slot.wrong{background:rgba(192,57,43,.10);border-color:var(--red)}
+.answer-slot.wrong .slot-num{color:var(--red)}
+.answer-slot .correct-mark{font-family:var(--mono);font-size:10px;color:var(--muted)}
+
+.score-display{padding:18px;background:var(--ink);color:var(--paper-2);border-radius:var(--r-md);margin-top:16px;display:flex;justify-content:space-between;align-items:center}
+.score-big{font-family:'Fraunces',serif;font-size:36px;font-weight:400;line-height:1}
+.score-big span{color:var(--gold)}
+.score-label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,230,.6);margin-bottom:4px}
+
+.number-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.num-chip{width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line);background:var(--paper-3);border-radius:4px;font-family:var(--mono);font-size:12px;cursor:pointer;user-select:none;transition:all .12s}
+.num-chip.selected{background:var(--ink);color:var(--paper-2);border-color:var(--ink)}
+.num-chip:hover{border-color:var(--ink)}
+.range-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.range-row input[type=number]{width:90px;padding:9px 12px;border:1px solid var(--line);background:var(--paper-2);border-radius:var(--r-sm);font-family:var(--mono)}
+
+/* ---------- VIDEOS ---------- */
+.video-card{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;transition:all .2s}
+.video-card:hover{border-color:var(--ink);box-shadow:var(--shadow-md)}
+.video-card video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;display:block}
+.video-info{padding:16px 18px}
+.video-title{font-family:var(--serif);font-size:18px;margin:0 0 6px}
+.video-desc{color:var(--muted);font-size:13px;margin:0}
+.video-actions{padding:0 18px 16px;display:flex;gap:8px}
+
+/* ---------- CALENDAR ---------- */
+.calendar-wrap{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-md);padding:26px}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.cal-month{font-family:var(--serif);font-size:28px;font-weight:400;letter-spacing:-.01em}
+.cal-month em{font-family:'Fraunces',serif;font-style:italic;color:var(--burgundy)}
+.cal-nav{display:flex;gap:6px}
+.cal-nav button{width:36px;height:36px;border:1px solid var(--line);background:var(--paper-3);border-radius:var(--r-sm);display:grid;place-items:center;color:var(--ink)}
+.cal-nav button:hover{background:var(--ink);color:var(--paper-2);border-color:var(--ink)}
+
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-sm);overflow:hidden}
+.cal-dow{background:var(--paper-3);padding:10px;text-align:center;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.cal-dow.sun{color:var(--burgundy)}
+.cal-day{background:var(--paper-2);min-height:92px;padding:8px;position:relative;cursor:pointer;transition:background .12s}
+.cal-day:hover{background:var(--paper-3)}
+.cal-day.other{color:var(--line-2);background:#f9f5ed}
+.cal-day .day-num{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ink)}
+.cal-day.sun .day-num{color:var(--burgundy)}
+.cal-day.today .day-num{display:inline-grid;place-items:center;width:22px;height:22px;background:var(--ink);color:var(--paper-2);border-radius:50%}
+.cal-day .cls-pill{margin-top:6px;padding:4px 6px;background:var(--burgundy);color:#fff;font-size:10px;border-radius:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---------- MODAL ---------- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(28,25,23,.5);z-index:50;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(2px)}
+.modal-backdrop.show{display:flex}
+.modal{background:var(--paper-2);border-radius:var(--r-lg);padding:32px;max-width:440px;width:100%;box-shadow:var(--shadow-lg);border:1px solid var(--line)}
+.modal h3{font-family:var(--serif);font-size:24px;font-weight:400;margin:0 0 8px}
+.modal-sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+.modal-actions{display:flex;gap:10px;margin-top:20px}
+.modal-actions .btn{flex:1}
+
+/* ---------- ANIMS ---------- */
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .45s ease both}
+.fade-up-1{animation-delay:.05s}.fade-up-2{animation-delay:.12s}.fade-up-3{animation-delay:.19s}.fade-up-4{animation-delay:.26s}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(245,240,230,.3);border-top-color:var(--paper-2);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading{padding:60px 20px;text-align:center;color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+
+@media(max-width:900px){
+  .app-shell{grid-template-columns:1fr}
+  .sidebar{position:fixed;top:0;left:0;right:0;height:auto;border-right:none;border-bottom:1px solid var(--line);padding:14px 18px;z-index:20}
+  .side-brand{padding:0 0 12px}
+  .side-nav{flex-direction:row;flex-wrap:wrap;margin-top:12px}
+  .nav-heading{display:none}
+  .nav-link{padding:8px 10px;font-size:13px;width:auto}
+  .side-footer{margin-top:12px}
+  .user-chip{padding:6px 8px}
+  .logout-btn{margin-top:6px}
+  .main{padding:220px 20px 60px}
+  .dday-hero{padding:28px;grid-template-columns:1fr;text-align:left}
+  .dday-count{font-size:80px}
+  .detail-grid{grid-template-columns:1fr}
+  .page-title{font-size:32px}
+  .cal-day{min-height:60px;padding:4px}
+}
+</style>
+</head>
+<body>
+<div id="app"><div class="loading">불러오는 중...</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =========================================================
+   CONFIG  ⚠️ 여기를 본인 Supabase 정보로 바꿔주세요
+   Supabase Dashboard → Settings → API 에서 확인
+   ========================================================= */
+const SUPABASE_URL = 'https://yfgjrnhhhssimcpobepd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_zy7wXi3EUfRqNuvlWbjFyg_H4iOBxhS';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+/* =========================================================
+   CONNECTION DIAGNOSTIC
+   ========================================================= */
+let CONN_OK = null;
+async function testConnection() {
+  try {
+    const r = await fetch(SUPABASE_URL + '/rest/v1/', {
+      method: 'GET',
+      headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+    });
+    CONN_OK = r.status < 500;
+    return CONN_OK;
+  } catch (e) {
+    CONN_OK = false;
+    console.error('[Supabase] 연결 실패:', e.message);
+    return false;
+  }
+}
+function isNetworkError(err) {
+  if (!err) return false;
+  const m = (err.message || '').toLowerCase();
+  return m.includes('load failed') || m.includes('failed to fetch') || m.includes('networkerror') || m.includes('network request failed');
+}
+
+const MENTOR_USERNAME = 'dhlee1024';
+const MENTOR_EMAIL = 'dhlee1024@mentor-app.local';
+const studentEmail = u => `${u}@student-app.local`;
+const SUNEUNG_DATE = new Date('2026-11-19T08:40:00+09:00');
+
+/* =========================================================
+   UTILS
+   ========================================================= */
+const $ = sel => document.querySelector(sel);
+const app = () => $('#app');
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ymd = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const fmtDate = d => { d = new Date(d); return `${d.getFullYear()}. ${String(d.getMonth()+1).padStart(2,'0')}. ${String(d.getDate()).padStart(2,'0')}.`; };
+const fmtBytes = b => !b ? '' : b<1024 ? b+' B' : b<1048576 ? (b/1024).toFixed(1)+' KB' : b<1073741824 ? (b/1048576).toFixed(1)+' MB' : (b/1073741824).toFixed(2)+' GB';
+
+function computeDday() {
+  const t = new Date(); const a = new Date(t.getFullYear(),t.getMonth(),t.getDate());
+  const b = new Date(SUNEUNG_DATE.getFullYear(),SUNEUNG_DATE.getMonth(),SUNEUNG_DATE.getDate());
+  return Math.round((b-a)/86400000);
+}
+
+function normalizeAns(v) {
+  if (v == null) return '';
+  const map = {'①':'1','②':'2','③':'3','④':'4','⑤':'5','㉮':'1','㉯':'2','㉰':'3','㉱':'4','㉲':'5'};
+  return String(v).trim().split('').map(c => map[c] || c).join('').toLowerCase();
+}
+
+function confirmDialog(title, sub, okText='확인') {
+  return new Promise(resolve => {
+    const bd = document.createElement('div');
+    bd.className = 'modal-backdrop show';
+    bd.innerHTML = `<div class="modal"><h3>${esc(title)}</h3><p class="modal-sub">${esc(sub)}</p><div class="modal-actions"><button class="btn btn-ghost" id="c-cancel">취소</button><button class="btn" id="c-ok">${esc(okText)}</button></div></div>`;
+    document.body.appendChild(bd);
+    bd.querySelector('#c-cancel').onclick = () => { bd.remove(); resolve(false); };
+    bd.querySelector('#c-ok').onclick = () => { bd.remove(); resolve(true); };
+  });
+}
+
+/* =========================================================
+   AUTH (with profile auto-create fallback)
+   ========================================================= */
+let CURRENT = null;
+
+async function loadProfile() {
+  try {
+    const { data: { user } } = await sb.auth.getUser();
+    if (!user) return null;
+
+    let { data: profile } = await sb.from('profiles').select('*').eq('id', user.id).maybeSingle();
+
+    if (!profile) {
+      const username = user.email === MENTOR_EMAIL ? MENTOR_USERNAME : user.email.split('@')[0];
+      const role = user.email === MENTOR_EMAIL ? 'mentor' : 'mentee';
+      const { data: created, error } = await sb.from('profiles')
+        .insert({ id: user.id, username, role })
+        .select().single();
+      if (error) { console.error('Profile 자동 생성 실패:', error); return null; }
+      profile = created;
+    }
+    return { ...profile, email: user.email };
+  } catch (e) {
+    console.error('[loadProfile]', e);
+    return null;
+  }
+}
+
+async function signIn(username, password) {
+  try {
+    const email = username === MENTOR_USERNAME ? MENTOR_EMAIL : studentEmail(username);
+    return await sb.auth.signInWithPassword({ email, password });
+  } catch (e) {
+    return { error: { message: e.message, _network: isNetworkError(e) } };
+  }
+}
+
+async function signUp(username, password) {
+  if (username === MENTOR_USERNAME) return { error: { message: '이 아이디는 사용할 수 없습니다.' } };
+  try {
+    const email = studentEmail(username);
+    return await sb.auth.signUp({ email, password, options: { data: { username } } });
+  } catch (e) {
+    return { error: { message: e.message, _network: isNetworkError(e) } };
+  }
+}
+
+async function signOut() {
+  await sb.auth.signOut();
+  CURRENT = null;
+  navigate('login');
+}
+
+const isMentor = () => CURRENT && CURRENT.role === 'mentor';
+
+/* =========================================================
+   ROUTER (hash-based)
+   ========================================================= */
+function navigate(route) {
+  location.hash = '#/' + route;
+}
+
+window.addEventListener('hashchange', render);
+window.addEventListener('load', async () => {
+  CURRENT = await loadProfile();
+  render();
+});
+
+async function render() {
+  const hash = location.hash.replace(/^#\/?/, '') || (CURRENT ? 'home' : 'login');
+  const [base, ...rest] = hash.split('/');
+
+  // 인증 가드
+  if (base !== 'login' && !CURRENT) {
+    CURRENT = await loadProfile();
+    if (!CURRENT) { location.hash = '#/login'; return; }
+  }
+  if (base === 'login' && CURRENT) { location.hash = '#/home'; return; }
+
+  switch (base) {
+    case 'login': return renderLogin();
+    case 'home': return renderHome();
+    case 'materials': return rest[0] ? renderMaterialDetail(rest[0], 'textbook', '수업 교재') : renderMaterialList('textbook', '수업 교재');
+    case 'exams': return rest[0] ? renderMaterialDetail(rest[0], 'mock_exam', '모의고사') : renderMaterialList('mock_exam', '모의고사');
+    case 'videos': return renderVideos();
+    case 'schedule': return renderSchedule();
+    default: return renderHome();
+  }
+}
+
+/* =========================================================
+   SHELL (sidebar + main)
+   ========================================================= */
+function shell(activeKey, mainHTML) {
+  const initial = (CURRENT.username || '?').charAt(0).toUpperCase();
+  const ment = isMentor();
+  app().innerHTML = `
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="side-brand"><em>S</em>cholaria</div>
+        <nav class="side-nav">
+          <div class="nav-heading">메뉴</div>
+          <a class="nav-link ${activeKey==='home'?'active':''}" href="#/home"><span class="nav-dot"></span>홈</a>
+          <a class="nav-link ${activeKey==='materials'?'active':''}" href="#/materials"><span class="nav-dot"></span>수업 교재</a>
+          <a class="nav-link ${activeKey==='exams'?'active':''}" href="#/exams"><span class="nav-dot"></span>모의고사</a>
+          <a class="nav-link ${activeKey==='videos'?'active':''}" href="#/videos"><span class="nav-dot"></span>강의 영상</a>
+          <a class="nav-link ${activeKey==='schedule'?'active':''}" href="#/schedule"><span class="nav-dot"></span>시간표</a>
+        </nav>
+        <div class="side-footer">
+          <div class="user-chip">
+            <div class="user-avatar ${ment?'mentor':''}">${initial}</div>
+            <div style="min-width:0;">
+              <div class="user-name">${esc(CURRENT.username)}</div>
+              <div class="user-role">${ment?'Mentor':'Mentee'}</div>
+            </div>
+          </div>
+          <button class="logout-btn" id="logout-btn">로그아웃</button>
+        </div>
+      </aside>
+      <main class="main">${mainHTML}</main>
+    </div>`;
+  $('#logout-btn').onclick = signOut;
+}
+
+/* =========================================================
+   PAGE: LOGIN
+   ========================================================= */
+function renderLogin() {
+  const dday = computeDday();
+  const dStr = dday > 0 ? `D-${dday}` : (dday === 0 ? 'D-DAY' : `D+${-dday}`);
+
+  app().innerHTML = `
+    <div class="auth-wrap">
+      <aside class="auth-hero">
+        <div class="brand"><span class="brand-mark">Scholaria</span></div>
+        <div class="hero-main">
+          <div class="hero-eyebrow fade-up fade-up-1">Mentor × Mentee · 2026</div>
+          <h1 class="hero-title fade-up fade-up-2">함께 걷는 <em>수능</em>까지의<br>마지막 여정.</h1>
+          <p class="hero-sub fade-up fade-up-3">수업 교재, 모의고사, 강의 영상, 시간표까지<br>한 곳에서 관리하는 개인 맞춤 학습 공간입니다.</p>
+        </div>
+        <div class="hero-meta fade-up fade-up-4">
+          <div>목표 · <span>2026 수능</span></div>
+          <div>D-day · <span>${dStr}</span></div>
+        </div>
+      </aside>
+      <main class="auth-panel">
+        <div class="auth-card">
+          <div id="conn-banner"></div>
+          <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="login">로그인</button>
+            <button class="auth-tab" data-tab="signup">회원가입</button>
+          </div>
+          <form id="login-form">
+            <div class="field"><label>아이디</label><input type="text" id="li-u" autocomplete="username" required></div>
+            <div class="field"><label>비밀번호</label><input type="password" id="li-p" autocomplete="current-password" required></div>
+            <button class="btn" type="submit" id="li-btn">로그인 →</button>
+            <div class="error-msg" id="li-err"></div>
+            <p class="auth-note">멘티는 회원가입 탭에서 계정을 먼저 만들어주세요.</p>
+          </form>
+          <form id="signup-form" style="display:none;">
+            <div class="field"><label>아이디 <span class="hint">(영문/숫자 4자 이상)</span></label><input type="text" id="su-u" required pattern="[a-zA-Z0-9_]+" minlength="4"></div>
+            <div class="field"><label>비밀번호 <span class="hint">(6자 이상)</span></label><input type="password" id="su-p" required minlength="6"></div>
+            <div class="field"><label>비밀번호 확인</label><input type="password" id="su-p2" required minlength="6"></div>
+            <button class="btn" type="submit" id="su-btn">가입하기 →</button>
+            <div class="error-msg" id="su-err"></div>
+            <div class="success-msg" id="su-ok"></div>
+            <p class="auth-note">가입 후 로그인 탭에서 바로 로그인할 수 있습니다.</p>
+          </form>
+        </div>
+      </main>
+    </div>`;
+
+  // 연결 진단
+  (async () => {
+    const ok = await testConnection();
+    const banner = $('#conn-banner');
+    if (!ok) {
+      banner.innerHTML = `
+        <div style="margin-bottom:24px;padding:14px 16px;background:rgba(192,57,43,.08);border-left:3px solid var(--red);border-radius:4px;font-size:13px;line-height:1.6;color:var(--ink);">
+          <div style="font-weight:700;color:var(--red);margin-bottom:4px;">⚠️ Supabase 서버에 연결할 수 없습니다</div>
+          <div style="color:var(--ink-2);">URL: <code style="font-family:var(--mono);font-size:11px;">${esc(SUPABASE_URL)}</code></div>
+          <div style="color:var(--muted);margin-top:6px;font-size:12px;">Supabase 프로젝트가 일시정지되었거나, URL이 잘못되었을 수 있습니다. 대시보드에서 Settings → API 의 Project URL을 확인해주세요.</div>
+        </div>`;
+    }
+  })();
+
+  // 탭 전환
+  document.querySelectorAll('.auth-tab').forEach(t => {
+    t.onclick = () => {
+      document.querySelectorAll('.auth-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      $('#login-form').style.display = t.dataset.tab === 'login' ? 'block' : 'none';
+      $('#signup-form').style.display = t.dataset.tab === 'signup' ? 'block' : 'none';
+    };
+  });
+
+  const showMsg = (id, msg, type='err') => {
+    const el = $('#'+id); el.textContent = msg;
+    el.classList.add('show');
+    if (type === 'err') setTimeout(() => el.classList.remove('show'), 5000);
+  };
+
+  $('#login-form').onsubmit = async e => {
+    e.preventDefault();
+    document.querySelectorAll('.error-msg, .success-msg').forEach(x => x.classList.remove('show'));
+    const btn = $('#li-btn'); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> 로그인 중...';
+    const u = $('#li-u').value.trim(), p = $('#li-p').value;
+    const { error } = await signIn(u, p);
+    if (error) {
+      btn.disabled = false; btn.textContent = '로그인 →';
+      if (error._network || isNetworkError(error)) {
+        showMsg('li-err', '⚠️ Supabase 서버에 연결할 수 없습니다. 위의 안내를 확인해주세요.');
+      } else if ((error.message || '').toLowerCase().includes('invalid')) {
+        showMsg('li-err', '아이디 또는 비밀번호가 올바르지 않습니다.');
+      } else {
+        showMsg('li-err', '로그인 실패: ' + error.message);
+      }
+      return;
+    }
+    CURRENT = await loadProfile();
+    if (!CURRENT) {
+      btn.disabled = false; btn.textContent = '로그인 →';
+      showMsg('li-err', '프로필 로드 실패. setup.sql을 다시 실행해주세요.');
+      return;
+    }
+    navigate('home');
+  };
+
+  $('#signup-form').onsubmit = async e => {
+    e.preventDefault();
+    document.querySelectorAll('.error-msg, .success-msg').forEach(x => x.classList.remove('show'));
+    const u = $('#su-u').value.trim(), p = $('#su-p').value, p2 = $('#su-p2').value;
+    if (u === MENTOR_USERNAME) return showMsg('su-err', '이 아이디는 사용할 수 없습니다.');
+    if (p !== p2) return showMsg('su-err', '비밀번호가 일치하지 않습니다.');
+
+    const btn = $('#su-btn'); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> 가입 중...';
+    const { data, error } = await signUp(u, p);
+    btn.disabled = false; btn.textContent = '가입하기 →';
+
+    if (error) {
+      if (error._network || isNetworkError(error)) {
+        showMsg('su-err', '⚠️ Supabase 서버에 연결할 수 없습니다.');
+        return;
+      }
+      const m = error.message.toLowerCase();
+      showMsg('su-err', m.includes('already') || m.includes('registered') ? '이미 사용 중인 아이디입니다.' : '회원가입 실패: ' + error.message);
+      return;
+    }
+    if (data.session) {
+      CURRENT = await loadProfile();
+      navigate('home');
+    } else {
+      showMsg('su-ok', '가입 완료! 로그인 탭에서 로그인해주세요.', 'ok');
+      $('#signup-form').reset();
+    }
+  };
+}
+
+/* =========================================================
+   PAGE: HOME
+   ========================================================= */
+function renderHome() {
+  const dday = computeDday();
+  const ddayText = dday > 0 ? dday : (dday === 0 ? 0 : -dday);
+  const ddayLabel = dday > 0 ? 'D-DAY' : (dday === 0 ? '오늘' : '경과');
+  const ddayPrefix = dday > 0 ? 'D−' : (dday === 0 ? '' : 'D+');
+  const today = new Date().toLocaleDateString('ko-KR',{weekday:'long', year:'numeric', month:'long', day:'numeric'});
+
+  shell('home', `
+    <div class="page-head fade-up fade-up-1">
+      <div>
+        <div class="page-eyebrow">${today}</div>
+        <h1 class="page-title">${esc(CURRENT.username)} 님, <em>오늘도 수고해요</em>.</h1>
+      </div>
+    </div>
+    <section class="dday-hero fade-up fade-up-2">
+      <div>
+        <div class="dday-label">2026 대학수학능력시험</div>
+        <h2 class="dday-title">11월 19일 <em>목요일</em></h2>
+        <p class="dday-sub">하루하루가 차곡차곡 쌓이고 있습니다.</p>
+      </div>
+      <div class="dday-count">${ddayPrefix}${ddayText}<sup>${ddayLabel}</sup></div>
+    </section>
+    <div class="home-grid">
+      <a class="home-card fade-up fade-up-2" href="#/materials">
+        <div class="card-num">01</div><h3>수업 교재</h3>
+        <p>교재 PDF · 답안 제출 · 자동채점</p><div class="card-arrow">→</div>
+      </a>
+      <a class="home-card fade-up fade-up-3" href="#/exams">
+        <div class="card-num">02</div><h3>모의고사</h3>
+        <p>문제지 다운로드 · 점수 확인</p><div class="card-arrow">→</div>
+      </a>
+      <a class="home-card fade-up fade-up-3" href="#/videos">
+        <div class="card-num">03</div><h3>강의 영상</h3>
+        <p>수업시간 문제풀이 다시보기</p><div class="card-arrow">→</div>
+      </a>
+      <a class="home-card fade-up fade-up-4" href="#/schedule">
+        <div class="card-num">04</div><h3>시간표</h3>
+        <p>수업 일정 확인</p><div class="card-arrow">→</div>
+      </a>
+    </div>
+  `);
+}
+
+/* =========================================================
+   PAGE: MATERIAL LIST
+   ========================================================= */
+async function renderMaterialList(category, label) {
+  const ment = isMentor();
+  const activeKey = category === 'textbook' ? 'materials' : 'exams';
+  shell(activeKey, `
+    <div class="page-head fade-up fade-up-1">
+      <div>
+        <div class="page-eyebrow">${category==='textbook'?'Textbook':'Mock Exam'}</div>
+        <h1 class="page-title"><em>${label}</em></h1>
+      </div>
+      ${ment ? `<button class="btn btn-small" id="add-btn">＋ 새 항목 추가</button>` : ''}
+    </div>
+    <div id="list-area" class="card-grid fade-up fade-up-2"><div class="loading">불러오는 중...</div></div>
+  `);
+
+  if (ment) $('#add-btn').onclick = () => openAddMaterialModal(category, label);
+
+  const { data, error } = await sb.from('materials').select('*').eq('category', category).order('created_at',{ascending:false});
+  const area = $('#list-area');
+  if (error) return area.innerHTML = `<div class="empty-state">오류: ${esc(error.message)}</div>`;
+  if (!data || data.length === 0) {
+    return area.innerHTML = `<div class="empty-state"><div class="em-icon">∅</div><div>아직 등록된 ${label}이(가) 없습니다.</div></div>`;
+  }
+
+  const route = category === 'textbook' ? 'materials' : 'exams';
+  area.innerHTML = data.map((m,i) => `
+    <a class="item-card fade-up ${i<4?'fade-up-'+(i+1):''}" href="#/${route}/${m.id}">
+      <span class="item-tag">${label}</span>
+      <h3 class="item-title">${esc(m.title)}</h3>
+      <div class="item-meta">
+        <span>📄 ${m.pdf_path?'PDF 있음':'업로드 전'}</span>
+        <span>✎ ${m.answer_key?Object.keys(m.answer_key).length+'문항':'답안 미등록'}</span>
+      </div>
+    </a>`).join('');
+}
+
+function openAddMaterialModal(category, label) {
+  const bd = document.createElement('div');
+  bd.className = 'modal-backdrop show';
+  bd.innerHTML = `
+    <div class="modal">
+      <h3>새 ${label} 추가</h3>
+      <p class="modal-sub">교재 이름을 입력하면 새 항목이 생성됩니다.</p>
+      <div class="field"><label>제목</label><input type="text" id="new-title" placeholder="예: 마더텅 기출 1단원" autofocus></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="m-cancel">취소</button>
+        <button class="btn" id="m-ok">추가하기</button>
+      </div>
+    </div>`;
+  document.body.appendChild(bd);
+  bd.querySelector('#m-cancel').onclick = () => bd.remove();
+  bd.querySelector('#m-ok').onclick = async () => {
+    const title = bd.querySelector('#new-title').value.trim();
+    if (!title) return;
+    const { error } = await sb.from('materials').insert({ title, category, created_by: CURRENT.id });
+    if (error) return alert('생성 실패: ' + error.message);
+    bd.remove();
+    render();
+  };
+  bd.querySelector('#new-title').focus();
+}
+
+/* =========================================================
+   PAGE: MATERIAL DETAIL
+   ========================================================= */
+async function renderMaterialDetail(id, category, label) {
+  const ment = isMentor();
+  const activeKey = category === 'textbook' ? 'materials' : 'exams';
+  const backRoute = activeKey;
+
+  shell(activeKey, `<div class="loading">불러오는 중...</div>`);
+
+  const { data: m, error } = await sb.from('materials').select('*').eq('id', id).maybeSingle();
+  if (error || !m) {
+    return shell(activeKey, `<a class="detail-back" href="#/${backRoute}">← 목록으로</a><div class="empty-state">항목을 찾을 수 없습니다.</div>`);
+  }
+
+  let submission = null;
+  if (!ment) {
+    const { data } = await sb.from('submissions').select('*').eq('material_id', id).eq('user_id', CURRENT.id).maybeSingle();
+    submission = data;
+  }
+
+  shell(activeKey, `
+    <a class="detail-back" href="#/${backRoute}">← ${label} 목록</a>
+    <div class="page-head fade-up fade-up-1">
+      <div>
+        <div class="page-eyebrow">${label}</div>
+        <h1 class="page-title">${esc(m.title)}</h1>
+      </div>
+      ${ment ? `<div style="display:flex;gap:8px;">
+        <button class="btn btn-small btn-ghost" id="rename-btn">이름 변경</button>
+        <button class="btn btn-small btn-danger" id="delete-btn">삭제</button>
+      </div>` : ''}
+    </div>
+    <div class="detail-grid">
+      <section class="section fade-up fade-up-2" id="pdf-section"></section>
+      <section class="section fade-up fade-up-3" id="answer-section"></section>
+    </div>
+  `);
+
+  if (ment) {
+    $('#rename-btn').onclick = async () => {
+      const t = prompt('새 이름', m.title);
+      if (!t || !t.trim()) return;
+      await sb.from('materials').update({ title: t.trim() }).eq('id', id);
+      render();
+    };
+    $('#delete-btn').onclick = async () => {
+      const ok = await confirmDialog('정말 삭제하시겠어요?', `"${m.title}" 항목과 모든 제출 답안이 삭제됩니다.`, '삭제');
+      if (!ok) return;
+      if (m.pdf_path) await sb.storage.from('materials').remove([m.pdf_path]);
+      await sb.from('materials').delete().eq('id', id);
+      navigate(backRoute);
+    };
+  }
+
+  renderPdfSection(m, ment);
+  renderAnswerSection(m, ment, submission);
+}
+
+function renderPdfSection(m, ment) {
+  const w = $('#pdf-section');
+  w.innerHTML = `
+    <div class="section-head"><h2 class="section-title">문제지 & 답지</h2><span class="section-sub">PDF</span></div>
+    <div style="margin-bottom:16px;">
+      <div class="subhead">문제지</div>
+      <div id="pdf-file-area"></div>
+      ${ment ? `<label class="upload-zone" id="pdf-upload" style="margin-top:10px;">
+        <input type="file" id="pdf-file" accept="application/pdf">
+        <div class="uz-title">PDF 업로드</div>
+        <div class="uz-sub">Click or drag to upload</div>
+        <div class="progress-bar" id="pdf-progress"><div class="progress-fill"></div></div>
+      </label>` : ''}
+    </div>
+    <div>
+      <div class="subhead">답지</div>
+      <div id="answer-key-area"></div>
+    </div>`;
+
+  // PDF 파일 표시
+  const area = $('#pdf-file-area');
+  if (!m.pdf_path) {
+    area.innerHTML = `<div style="font-size:13px;color:var(--muted);padding:14px;background:var(--paper-3);border-radius:6px;border:1px dashed var(--line-2);text-align:center;">아직 PDF가 업로드되지 않았습니다.</div>`;
+  } else {
+    const { data: pub } = sb.storage.from('materials').getPublicUrl(m.pdf_path);
+    const fileName = m.pdf_path.split('/').pop();
+    area.innerHTML = `
+      <div class="file-badge">
+        <div class="file-icon">PDF</div>
+        <div class="file-meta"><div class="file-name">${esc(fileName)}</div><div class="file-size">업로드됨</div></div>
+        <a class="btn btn-small btn-ghost" href="${pub.publicUrl}" download target="_blank" rel="noopener">다운로드</a>
+        ${ment ? `<button class="btn btn-small btn-danger" id="pdf-remove">삭제</button>` : ''}
+      </div>`;
+    if (ment) {
+      $('#pdf-remove').onclick = async () => {
+        if (!confirm('PDF를 삭제할까요?')) return;
+        await sb.storage.from('materials').remove([m.pdf_path]);
+        await sb.from('materials').update({ pdf_path: null }).eq('id', m.id);
+        render();
+      };
+    }
+  }
+
+  // PDF 업로드
+  if (ment) {
+    const zone = $('#pdf-upload'), input = $('#pdf-file'), prog = $('#pdf-progress'), fill = prog.querySelector('.progress-fill');
+    const handle = async file => {
+      if (!file) return;
+      if (!file.name.toLowerCase().endsWith('.pdf')) return alert('PDF 파일만 업로드 가능합니다.');
+      const path = `${m.id}/${Date.now()}_${file.name}`;
+      prog.classList.add('show'); fill.style.width = '10%';
+      const { error } = await sb.storage.from('materials').upload(path, file, { cacheControl:'3600', upsert:false });
+      if (error) { alert('업로드 실패: ' + error.message); prog.classList.remove('show'); return; }
+      fill.style.width = '80%';
+      await sb.from('materials').update({ pdf_path: path }).eq('id', m.id);
+      fill.style.width = '100%';
+      setTimeout(render, 300);
+    };
+    zone.onclick = e => { if (e.target !== input) input.click(); };
+    input.onchange = e => handle(e.target.files[0]);
+    zone.ondragover = e => { e.preventDefault(); zone.classList.add('dragging'); };
+    zone.ondragleave = () => zone.classList.remove('dragging');
+    zone.ondrop = e => { e.preventDefault(); zone.classList.remove('dragging'); handle(e.dataTransfer.files[0]); };
+  }
+
+  // 답지
+  const akArea = $('#answer-key-area');
+  const has = m.answer_key && Object.keys(m.answer_key).length > 0;
+  if (!ment) {
+    akArea.innerHTML = has
+      ? `<div style="font-size:13px;color:var(--muted);padding:12px;background:var(--paper-3);border-radius:6px;">답안 제출 시 자동 채점 · ${Object.keys(m.answer_key).length}문항</div>`
+      : `<div style="font-size:13px;color:var(--muted);padding:12px;background:var(--paper-3);border-radius:6px;">멘토님이 아직 답지를 등록하지 않았습니다.</div>`;
+    return;
+  }
+
+  akArea.innerHTML = `
+    <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">문제 번호당 정답을 입력하세요. (객관식: ①~⑤ 또는 1~5, 주관식: 숫자/답)</div>
+    <div id="ak-grid"></div>
+    <div class="range-row">
+      <span style="font-size:12px;color:var(--muted);">총 문항 수:</span>
+      <input type="number" id="total-q" min="1" max="200" value="${has?Object.keys(m.answer_key).length:20}">
+      <button class="btn btn-small btn-ghost" id="regen-grid">생성/갱신</button>
+      <button class="btn btn-small" id="save-key">답지 저장</button>
+    </div>`;
+  const buildGrid = (n, existing) => {
+    const g = $('#ak-grid'); g.className = 'answers-grid';
+    let out = '';
+    for (let i = 1; i <= n; i++) {
+      const v = existing?.[i] ?? '';
+      out += `<div class="answer-slot"><div class="slot-num">${i}</div><input type="text" class="ak-input" data-num="${i}" value="${esc(v)}" maxlength="10"></div>`;
+    }
+    g.innerHTML = out;
+  };
+  buildGrid(has?Object.keys(m.answer_key).length:20, m.answer_key);
+  $('#regen-grid').onclick = () => {
+    const n = parseInt($('#total-q').value); if (!n||n<1) return;
+    const existing = {};
+    document.querySelectorAll('.ak-input').forEach(i => { if (i.value.trim()) existing[i.dataset.num] = i.value.trim(); });
+    buildGrid(n, existing);
+  };
+  $('#save-key').onclick = async () => {
+    const key = {};
+    document.querySelectorAll('.ak-input').forEach(i => { const v = i.value.trim(); if (v) key[i.dataset.num] = v; });
+    const { error } = await sb.from('materials').update({ answer_key: key }).eq('id', m.id);
+    if (error) return alert('저장 실패: ' + error.message);
+    alert('답지가 저장되었습니다.');
+    render();
+  };
+}
+
+function renderAnswerSection(m, ment, submission) {
+  const w = $('#answer-section');
+  if (ment) return renderMentorAnswerPanel(w, m);
+  return renderMenteeAnswerPanel(w, m, submission);
+}
+
+async function renderMentorAnswerPanel(w, m) {
+  const total = m.answer_key ? Object.keys(m.answer_key).length : 0;
+  const allowed = m.allowed_numbers || [];
+
+  w.innerHTML = `
+    <div class="section-head"><h2 class="section-title">숙제 범위 & 제출 현황</h2><span class="section-sub">Mentor Controls</span></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">멘티가 답안을 제출할 수 있는 문제 번호를 지정하세요. 숫자를 클릭해 선택/해제합니다.</div>
+    ${total === 0 ? `<div style="padding:14px;background:var(--paper-3);border-radius:6px;font-size:13px;color:var(--muted);">답지를 먼저 등록하면 문제 번호가 나타납니다.</div>` : `
+      <div class="number-chips" id="num-chips"></div>
+      <div class="range-row">
+        <button class="btn btn-small btn-ghost" id="sel-all">전체 선택</button>
+        <button class="btn btn-small btn-ghost" id="sel-none">전체 해제</button>
+        <span style="font-size:12px;color:var(--muted);">범위:</span>
+        <input type="number" id="r-from" min="1" max="${total}" placeholder="시작">
+        <span>~</span>
+        <input type="number" id="r-to" min="1" max="${total}" placeholder="끝">
+        <button class="btn btn-small btn-ghost" id="r-apply">범위 선택</button>
+      </div>
+      <button class="btn btn-small" id="save-allowed" style="margin-top:14px;">숙제 범위 저장</button>
+      <hr style="margin:24px 0;border:none;border-top:1px solid var(--line);">
+      <h3 style="font-family:var(--serif);font-weight:400;font-size:18px;margin:0 0 12px;">멘티 제출 현황</h3>
+      <div id="sub-list">불러오는 중...</div>
+    `}`;
+
+  if (total === 0) return;
+
+  const selected = new Set(allowed.map(Number));
+  const chips = $('#num-chips');
+  const draw = () => {
+    let out = '';
+    for (let i = 1; i <= total; i++) out += `<div class="num-chip ${selected.has(i)?'selected':''}" data-n="${i}">${i}</div>`;
+    chips.innerHTML = out;
+    chips.querySelectorAll('.num-chip').forEach(c => c.onclick = () => {
+      const n = parseInt(c.dataset.n);
+      selected.has(n) ? selected.delete(n) : selected.add(n);
+      c.classList.toggle('selected');
+    });
+  };
+  draw();
+
+  $('#sel-all').onclick = () => { for (let i=1;i<=total;i++) selected.add(i); draw(); };
+  $('#sel-none').onclick = () => { selected.clear(); draw(); };
+  $('#r-apply').onclick = () => {
+    const a = parseInt($('#r-from').value), b = parseInt($('#r-to').value);
+    if (!a||!b||a>b) return;
+    for (let i=a; i<=Math.min(b,total); i++) selected.add(i);
+    draw();
+  };
+  $('#save-allowed').onclick = async () => {
+    const arr = [...selected].sort((a,b)=>a-b);
+    const { error } = await sb.from('materials').update({ allowed_numbers: arr }).eq('id', m.id);
+    if (error) return alert('저장 실패: ' + error.message);
+    alert(`${arr.length}개 문항이 숙제로 지정되었습니다.`);
+  };
+
+  // 제출 현황
+  const { data: subs } = await sb.from('submissions').select('*, profiles(username)').eq('material_id', m.id).order('submitted_at',{ascending:false});
+  const subEl = $('#sub-list');
+  if (!subs || subs.length === 0) {
+    subEl.innerHTML = `<div style="font-size:13px;color:var(--muted);padding:12px;background:var(--paper-3);border-radius:6px;">아직 제출한 멘티가 없습니다.</div>`;
+  } else {
+    subEl.innerHTML = subs.map(s => `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--paper-3);border-radius:6px;margin-bottom:6px;">
+        <div>
+          <div style="font-weight:600;">${esc(s.profiles?.username||'알 수 없음')}</div>
+          <div style="font-size:11px;color:var(--muted);font-family:var(--mono);">${fmtDate(s.submitted_at)}</div>
+        </div>
+        <div style="font-family:'Fraunces',serif;font-size:22px;">
+          <span style="color:var(--burgundy);">${s.score??'-'}</span><span style="color:var(--muted);font-size:14px;"> / ${s.total??'-'}</span>
+        </div>
+      </div>`).join('');
+  }
+}
+
+function renderMenteeAnswerPanel(w, m, submission) {
+  const total = m.answer_key ? Object.keys(m.answer_key).length : 0;
+  const allowed = new Set((m.allowed_numbers || []).map(Number));
+
+  if (total === 0) {
+    return w.innerHTML = `<div class="section-head"><h2 class="section-title">답안 제출</h2></div><div style="padding:14px;background:var(--paper-3);border-radius:6px;font-size:13px;color:var(--muted);">멘토님이 아직 답지를 등록하지 않았습니다.</div>`;
+  }
+  if (allowed.size === 0) {
+    return w.innerHTML = `<div class="section-head"><h2 class="section-title">답안 제출</h2></div><div style="padding:14px;background:var(--paper-3);border-radius:6px;font-size:13px;color:var(--muted);">이 교재는 아직 숙제로 지정되지 않았습니다.</div>`;
+  }
+
+  const graded = submission?.score != null;
+
+  w.innerHTML = `
+    <div class="section-head"><h2 class="section-title">${graded?'채점 결과':'답안 제출'}</h2><span class="section-sub">${submission?'제출 완료':'미제출'}</span></div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">숙제 범위 · 총 ${allowed.size}문항 ${submission?'(수정 후 다시 제출 가능)':''}</div>
+    <div class="answers-grid" id="m-grid"></div>
+    ${graded ? `<div class="score-display">
+      <div><div class="score-label">맞은 개수</div><div class="score-big"><span>${submission.score}</span> / ${submission.total}</div></div>
+      <div style="font-family:'Fraunces',serif;font-size:32px;color:var(--gold);">${submission.total?Math.round(submission.score/submission.total*100):0}%</div>
+    </div>` : ''}
+    <button class="btn" id="submit-ans" style="margin-top:18px;">${submission?'다시 제출하고 재채점':'제출하고 채점하기'}</button>`;
+
+  const grid = $('#m-grid');
+  const prior = submission?.answers || {};
+  let out = '';
+  for (let i = 1; i <= total; i++) {
+    const isAllow = allowed.has(i);
+    const v = prior[i] ?? '';
+    const correct = m.answer_key[i];
+    let cls = '', badge = '';
+    if (graded && isAllow && v) {
+      if (normalizeAns(v) === normalizeAns(correct)) { cls='correct'; badge=`<div class="correct-mark">✓</div>`; }
+      else { cls='wrong'; badge=`<div class="correct-mark">정답: ${esc(correct)}</div>`; }
+    }
+    out += `<div class="answer-slot ${isAllow?'':'locked'} ${cls}">
+      <div class="slot-num">${i}</div>
+      <input type="text" class="m-input" data-num="${i}" value="${esc(v)}" ${isAllow?'':'disabled'} maxlength="10" placeholder="${isAllow?'':'-'}">
+      ${badge}
+    </div>`;
+  }
+  grid.innerHTML = out;
+
+  $('#submit-ans').onclick = async () => {
+    const answers = {};
+    document.querySelectorAll('.m-input').forEach(i => {
+      const n = parseInt(i.dataset.num);
+      if (allowed.has(n)) { const v = i.value.trim(); if (v) answers[n] = v; }
+    });
+    if (Object.keys(answers).length === 0) return alert('최소 한 문제 이상 답안을 입력해주세요.');
+    let score = 0;
+    for (const n of allowed) {
+      const c = m.answer_key[n];
+      if (c && answers[n] && normalizeAns(answers[n]) === normalizeAns(c)) score++;
+    }
+    const { error } = await sb.from('submissions').upsert({
+      material_id: m.id, user_id: CURRENT.id, answers, score, total: allowed.size
+    }, { onConflict: 'material_id,user_id' });
+    if (error) return alert('제출 실패: ' + error.message);
+    render();
+  };
+}
+
+/* =========================================================
+   PAGE: VIDEOS
+   ========================================================= */
+async function renderVideos() {
+  const ment = isMentor();
+  shell('videos', `
+    <div class="page-head fade-up fade-up-1">
+      <div>
+        <div class="page-eyebrow">Lecture Archive</div>
+        <h1 class="page-title"><em>강의</em> 영상</h1>
+      </div>
+      ${ment ? `<button class="btn btn-small" id="upload-open">＋ 영상 업로드</button>` : ''}
+    </div>
+    ${ment ? `<div id="upload-panel" class="section" style="display:none;margin-bottom:24px;">
+      <div class="section-head"><h2 class="section-title">새 영상 업로드</h2><span class="section-sub">Mentor Only</span></div>
+      <div class="field"><label>제목</label><input type="text" id="v-title" placeholder="예: 9월 모의고사 21번 풀이"></div>
+      <div class="field"><label>설명 (선택)</label><input type="text" id="v-desc" placeholder="간단한 설명"></div>
+      <label class="upload-zone" id="v-zone">
+        <input type="file" id="v-file" accept="video/*">
+        <div class="uz-title">영상 파일 선택</div>
+        <div class="uz-sub">Click or drag — mp4 · mov · webm</div>
+        <div id="v-selected" style="margin-top:10px;font-size:13px;color:var(--ink);"></div>
+        <div class="progress-bar" id="v-progress"><div class="progress-fill"></div></div>
+      </label>
+      <div style="display:flex;gap:10px;margin-top:14px;">
+        <button class="btn btn-ghost" id="v-cancel">취소</button>
+        <button class="btn" id="v-submit">업로드 시작</button>
+      </div>
+    </div>` : ''}
+    <div id="v-list" class="card-grid"><div class="loading">불러오는 중...</div></div>
+  `);
+
+  if (ment) setupVideoUpload();
+  await loadVideos();
+}
+
+function setupVideoUpload() {
+  const panel = $('#upload-panel'), zone = $('#v-zone'), input = $('#v-file');
+  const sel = $('#v-selected'), prog = $('#v-progress'), fill = prog.querySelector('.progress-fill');
+  let chosen = null;
+
+  $('#upload-open').onclick = () => panel.style.display = 'block';
+  $('#v-cancel').onclick = () => {
+    panel.style.display = 'none'; input.value = ''; sel.textContent = '';
+    chosen = null; prog.classList.remove('show'); fill.style.width = '0%';
+  };
+  zone.onclick = e => { if (e.target !== input) input.click(); };
+  input.onchange = e => { chosen = e.target.files[0]; if (chosen) sel.innerHTML = `선택됨: <strong>${esc(chosen.name)}</strong> (${fmtBytes(chosen.size)})`; };
+  zone.ondragover = e => { e.preventDefault(); zone.classList.add('dragging'); };
+  zone.ondragleave = () => zone.classList.remove('dragging');
+  zone.ondrop = e => {
+    e.preventDefault(); zone.classList.remove('dragging');
+    chosen = e.dataTransfer.files[0]; if (chosen) sel.innerHTML = `선택됨: <strong>${esc(chosen.name)}</strong> (${fmtBytes(chosen.size)})`;
+  };
+
+  $('#v-submit').onclick = async () => {
+    const title = $('#v-title').value.trim();
+    const desc = $('#v-desc').value.trim();
+    if (!title) return alert('제목을 입력해주세요.');
+    if (!chosen) return alert('영상 파일을 선택해주세요.');
+
+    const btn = $('#v-submit'); btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> 업로드 중...';
+    prog.classList.add('show'); fill.style.width = '5%';
+
+    let p = 5;
+    const tick = setInterval(() => { p = Math.min(p + 2, 85); fill.style.width = p + '%'; }, 400);
+
+    const ext = chosen.name.split('.').pop();
+    const path = `${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const { error: upErr } = await sb.storage.from('videos').upload(path, chosen, { cacheControl:'3600', contentType: chosen.type || 'video/mp4' });
+    clearInterval(tick);
+    if (upErr) {
+      alert('업로드 실패: ' + upErr.message);
+      btn.disabled = false; btn.textContent = '업로드 시작';
+      prog.classList.remove('show'); fill.style.width = '0%'; return;
+    }
+    fill.style.width = '95%';
+    const { error: insErr } = await sb.from('videos').insert({ title, description: desc||null, video_path: path, created_by: CURRENT.id });
+    if (insErr) {
+      alert('저장 실패: ' + insErr.message);
+      btn.disabled = false; btn.textContent = '업로드 시작'; return;
+    }
+    fill.style.width = '100%';
+    setTimeout(render, 400);
+  };
+}
+
+async function loadVideos() {
+  const list = $('#v-list');
+  const { data, error } = await sb.from('videos').select('*').order('created_at',{ascending:false});
+  if (error) return list.innerHTML = `<div class="empty-state">오류: ${esc(error.message)}</div>`;
+  if (!data || data.length === 0) return list.innerHTML = `<div class="empty-state"><div class="em-icon">▷</div><div>아직 업로드된 영상이 없습니다.</div></div>`;
+
+  const ment = isMentor();
+  list.innerHTML = data.map((v,i) => {
+    const { data: pub } = sb.storage.from('videos').getPublicUrl(v.video_path);
+    return `<div class="video-card fade-up ${i<4?'fade-up-'+(i+1):''}">
+      <video controls preload="metadata" src="${pub.publicUrl}"></video>
+      <div class="video-info">
+        <h3 class="video-title">${esc(v.title)}</h3>
+        ${v.description?`<p class="video-desc">${esc(v.description)}</p>`:''}
+        <div class="item-meta" style="margin-top:10px;"><span>${fmtDate(v.created_at)}</span></div>
+      </div>
+      <div class="video-actions">
+        <a class="btn btn-small btn-ghost" href="${pub.publicUrl}" download target="_blank" rel="noopener">다운로드</a>
+        ${ment?`<button class="btn btn-small btn-danger" data-id="${v.id}" data-path="${esc(v.video_path)}">삭제</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  if (ment) {
+    list.querySelectorAll('button[data-id]').forEach(b => b.onclick = async () => {
+      const ok = await confirmDialog('영상을 삭제할까요?', '삭제 후에는 되돌릴 수 없습니다.', '삭제');
+      if (!ok) return;
+      await sb.storage.from('videos').remove([b.dataset.path]);
+      await sb.from('videos').delete().eq('id', b.dataset.id);
+      loadVideos();
+    });
+  }
+}
+
+/* =========================================================
+   PAGE: SCHEDULE
+   ========================================================= */
+let SCHED_STATE = { year: 0, month: 0, events: [] };
+
+async function renderSchedule() {
+  const ment = isMentor();
+  if (!SCHED_STATE.year) {
+    const n = new Date();
+    SCHED_STATE.year = n.getFullYear();
+    SCHED_STATE.month = n.getMonth();
+  }
+
+  shell('schedule', `
+    <div class="page-head fade-up fade-up-1">
+      <div><div class="page-eyebrow">Class Calendar</div><h1 class="page-title"><em>시간표</em></h1></div>
+      <div style="font-size:13px;color:var(--muted);">${ment?'날짜를 클릭하면 수업 일정을 추가/관리할 수 있습니다.':'수업 예정일은 색이 표시됩니다.'}</div>
+    </div>
+    <div class="calendar-wrap fade-up fade-up-2">
+      <div class="cal-head">
+        <div class="cal-month" id="cal-month-label"></div>
+        <div class="cal-nav">
+          <button id="cal-prev" title="이전 달">‹</button>
+          <button id="cal-today" style="width:auto;padding:0 14px;font-size:13px;">오늘</button>
+          <button id="cal-next" title="다음 달">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+    <div style="margin-top:24px;font-size:12px;color:var(--muted);font-family:var(--mono);letter-spacing:.1em;">
+      ※ 일요일 빨간색 · 오늘 동그란 검은 표시 · <span style="display:inline-block;width:10px;height:10px;background:var(--burgundy);border-radius:2px;vertical-align:middle;"></span> 수업일
+    </div>
+  `);
+
+  $('#cal-prev').onclick = async () => { SCHED_STATE.month--; if (SCHED_STATE.month<0) { SCHED_STATE.month=11; SCHED_STATE.year--; } await loadEvents(); drawCalendar(); };
+  $('#cal-next').onclick = async () => { SCHED_STATE.month++; if (SCHED_STATE.month>11) { SCHED_STATE.month=0; SCHED_STATE.year++; } await loadEvents(); drawCalendar(); };
+  $('#cal-today').onclick = async () => { const n = new Date(); SCHED_STATE.year=n.getFullYear(); SCHED_STATE.month=n.getMonth(); await loadEvents(); drawCalendar(); };
+
+  await loadEvents();
+  drawCalendar();
+}
+
+async function loadEvents() {
+  const f = ymd(new Date(SCHED_STATE.year, SCHED_STATE.month, 1));
+  const t = ymd(new Date(SCHED_STATE.year, SCHED_STATE.month + 1, 0));
+  const { data } = await sb.from('schedule').select('*').gte('class_date', f).lte('class_date', t).order('class_date');
+  SCHED_STATE.events = data || [];
+}
+
+function drawCalendar() {
+  $('#cal-month-label').innerHTML = `${SCHED_STATE.year} <em>${String(SCHED_STATE.month+1).padStart(2,'0')}월</em>`;
+  const grid = $('#cal-grid');
+  const dows = ['일','월','화','수','목','금','토'];
+  const first = new Date(SCHED_STATE.year, SCHED_STATE.month, 1);
+  const startDow = first.getDay();
+  const daysInMonth = new Date(SCHED_STATE.year, SCHED_STATE.month+1, 0).getDate();
+  const prevMonthDays = new Date(SCHED_STATE.year, SCHED_STATE.month, 0).getDate();
+  const today = new Date();
+  const isToday = (y,m,d) => y===today.getFullYear() && m===today.getMonth() && d===today.getDate();
+
+  let html = dows.map((d,i) => `<div class="cal-dow ${i===0?'sun':''}">${d}</div>`).join('');
+  for (let i = startDow-1; i >= 0; i--) html += `<div class="cal-day other"><div class="day-num">${prevMonthDays-i}</div></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dow = (startDow + d - 1) % 7;
+    const dateStr = ymd(new Date(SCHED_STATE.year, SCHED_STATE.month, d));
+    const dayEv = SCHED_STATE.events.filter(e => e.class_date === dateStr);
+    html += `<div class="cal-day ${dow===0?'sun':''} ${isToday(SCHED_STATE.year,SCHED_STATE.month,d)?'today':''}" data-date="${dateStr}">
+      <div class="day-num">${d}</div>
+      ${dayEv.slice(0,2).map(e => `<div class="cls-pill">${esc(e.title||'수업')}</div>`).join('')}
+      ${dayEv.length>2?`<div class="cls-pill" style="background:var(--muted);">+${dayEv.length-2}</div>`:''}
+    </div>`;
+  }
+  const totalCells = startDow + daysInMonth;
+  const trail = (7 - totalCells % 7) % 7;
+  for (let i = 1; i <= trail; i++) html += `<div class="cal-day other"><div class="day-num">${i}</div></div>`;
+  grid.innerHTML = html;
+
+  grid.querySelectorAll('.cal-day[data-date]').forEach(c => c.onclick = () => openDay(c.dataset.date));
+}
+
+function openDay(dateStr) {
+  const ment = isMentor();
+  const dayEv = SCHED_STATE.events.filter(e => e.class_date === dateStr);
+  const d = new Date(dateStr + 'T00:00:00');
+  const dowStr = ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'][d.getDay()];
+
+  const bd = document.createElement('div');
+  bd.className = 'modal-backdrop show';
+  bd.innerHTML = `<div class="modal" style="max-width:500px;">
+    <h3>${d.getFullYear()}. ${String(d.getMonth()+1).padStart(2,'0')}. ${String(d.getDate()).padStart(2,'0')}. <span style="color:var(--muted);font-size:15px;font-family:var(--mono);">${dowStr}</span></h3>
+    <p class="modal-sub">등록된 일정 ${dayEv.length}건</p>
+    <div id="day-events" style="margin-bottom:${ment?'18px':'0'};"></div>
+    ${ment?`<hr style="border:none;border-top:1px solid var(--line);margin:0 0 18px;">
+      <div class="field"><label>새 일정 제목</label><input type="text" id="ne-t" placeholder="예: 수학 문제풀이 수업"></div>
+      <div class="field"><label>메모 (선택)</label><input type="text" id="ne-n" placeholder="준비물, 범위 등"></div>
+      <button class="btn" id="add-evt">＋ 이 날 수업 추가</button>`:(dayEv.length===0?`<div style="padding:12px;background:var(--paper-3);border-radius:6px;font-size:13px;color:var(--muted);text-align:center;">이 날은 수업 일정이 없습니다.</div>`:'')}
+    <div class="modal-actions"><button class="btn btn-ghost" id="m-close">닫기</button></div>
+  </div>`;
+  document.body.appendChild(bd);
+
+  const close = () => bd.remove();
+  bd.querySelector('#m-close').onclick = close;
+  bd.onclick = e => { if (e.target === bd) close(); };
+
+  const listEl = bd.querySelector('#day-events');
+  const renderList = () => {
+    if (dayEv.length === 0) {
+      listEl.innerHTML = ment ? `<div style="padding:10px;background:var(--paper-3);border-radius:6px;font-size:13px;color:var(--muted);">아직 등록된 일정이 없습니다.</div>` : '';
+      return;
+    }
+    listEl.innerHTML = dayEv.map(e => `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--paper-3);border-radius:6px;margin-bottom:6px;">
+      <div>
+        <div style="font-weight:600;font-family:var(--serif);font-size:16px;">${esc(e.title||'수업')}</div>
+        ${e.notes?`<div style="font-size:12px;color:var(--muted);margin-top:2px;">${esc(e.notes)}</div>`:''}
+      </div>
+      ${ment?`<button class="btn btn-small btn-danger" data-del="${e.id}">삭제</button>`:''}
+    </div>`).join('');
+    if (ment) listEl.querySelectorAll('button[data-del]').forEach(b => b.onclick = async () => {
+      if (!confirm('이 일정을 삭제할까요?')) return;
+      await sb.from('schedule').delete().eq('id', b.dataset.del);
+      close(); await loadEvents(); drawCalendar();
+    });
+  };
+  renderList();
+
+  if (ment) {
+    bd.querySelector('#add-evt').onclick = async () => {
+      const title = bd.querySelector('#ne-t').value.trim();
+      if (!title) return alert('제목을 입력해주세요.');
+      const notes = bd.querySelector('#ne-n').value.trim();
+      const { error } = await sb.from('schedule').insert({ class_date: dateStr, title, notes: notes||null, created_by: CURRENT.id });
+      if (error) return alert('추가 실패: ' + error.message);
+      close(); await loadEvents(); drawCalendar();
+    };
+  }
+}
+
+/* =========================================================
+   AUTH STATE LISTENER
+   ========================================================= */
+sb.auth.onAuthStateChange(async (event) => {
+  if (event === 'SIGNED_OUT') { CURRENT = null; navigate('login'); }
+});
+</script>
+</body>
+</html>
