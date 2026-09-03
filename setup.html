@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>설정 가이드 · Mentor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Noto Sans KR',sans-serif;background:#0b0d12;color:#eef1f7;padding:40px 20px;line-height:1.7;}
+.wrap{max-width:760px;margin:0 auto;}
+h1{font-size:32px;margin-bottom:8px;}
+h2{font-size:20px;margin:32px 0 12px;color:#d9b46a;}
+code,pre{font-family:'JetBrains Mono',monospace;background:#1a1f2b;padding:2px 6px;border-radius:4px;color:#f0d08b;}
+pre{padding:14px;border-radius:8px;overflow-x:auto;font-size:13px;}
+ol li,ul li{margin-bottom:8px;}
+a{color:#6aa8ff;}
+.note{background:#141821;border:1px solid #222836;border-radius:10px;padding:14px 18px;margin:18px 0;font-size:14px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>설정 가이드</h1>
+<p>5분이면 끝납니다. 순서대로 따라하세요.</p>
+
+<h2>1. Supabase 프로젝트 생성</h2>
+<ol>
+<li><a href="https://supabase.com" target="_blank">supabase.com</a> 가입 → New Project</li>
+<li>Region은 <code>Northeast Asia (Seoul)</code> 추천</li>
+<li>DB 비밀번호는 안전한 곳에 보관</li>
+</ol>
+
+<h2>2. SQL 실행 (테이블/RLS/Storage 한방에)</h2>
+<ol>
+<li>좌측 메뉴 → <code>SQL Editor</code> → <code>+ New query</code></li>
+<li>이 폴더의 <code>schema.sql</code> 전체를 복사해서 붙여넣고 <strong>Run</strong></li>
+<li>"Success. No rows returned" 가 뜨면 OK</li>
+</ol>
+
+<h2>3. URL/Key 연결</h2>
+<ol>
+<li>Project Settings → API 에서 <code>Project URL</code> 과 <code>anon public key</code> 복사</li>
+<li><code>config.js</code> 파일을 열어 두 값을 본인 것으로 교체</li>
+</ol>
+<pre>window.SUPABASE_URL  = "https://xxxxx.supabase.co";
+window.SUPABASE_ANON = "eyJhbGciOi....";</pre>
+
+<h2>4. 이메일 인증 끄기 (중요)</h2>
+<p>아이디 기반 로그인이라서 이메일 인증이 켜져 있으면 가입이 막힙니다.</p>
+<ol>
+<li>Authentication → Providers → Email</li>
+<li><strong>Confirm email</strong> 토글을 <strong>OFF</strong></li>
+</ol>
+
+<h2>5. 멘토 계정 생성</h2>
+<ol>
+<li>사이트 접속 → 회원가입 탭</li>
+<li>아이디 <code>dhlee1024</code>, 비밀번호 <code>smartboy1024!</code> 로 가입</li>
+<li>DB 트리거가 자동으로 <code>role='mentor'</code> 부여</li>
+</ol>
+<div class="note">멘토 계정은 단 하나입니다. 가입 후엔 다른 사용자는 <code>dhlee1024</code> 아이디를 못 씁니다.</div>
+
+<h2>6. GitHub Pages 배포 (선택)</h2>
+<ol>
+<li>레포의 Settings → Pages → Source: 작업 브랜치 선택</li>
+<li>몇 분 뒤 <code>https://&lt;계정&gt;.github.io/&lt;레포&gt;/</code> 로 접속</li>
+</ol>
+
+<h2>영상 파일 크기 안내</h2>
+<p>Supabase 무료 플랜은 파일당 50MB 까지입니다. 큰 강의 영상은:</p>
+<ul>
+<li>Supabase Pro 플랜 (5GB/파일)</li>
+<li>또는 HandBrake 등으로 압축 (720p, H.264, CRF 23 정도면 50MB 안쪽 가능)</li>
+</ul>
+
+<p style="margin-top:40px;color:#6b7385;">— 끝.</p>
+</div>
+</body>
+</html>
